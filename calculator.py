@@ -1,8 +1,40 @@
-build_version = "v4"
+build_version = "v5a1"
 import os
 import csv
 import json #Esto es para guardar opciones en el futuro (guardar moneda , % favorito {?}, usuarios)
 from csv_commands import create_csv
+
+def primer_inicio():
+
+ if os.path.isfile("settings.json"):
+    pass
+ else:
+    ajustes = {
+      "primer_inicio": "False",
+      "moneda_favorita": "",
+      "iva_favorito": ""
+   }
+
+    with open("settings.json", 'w') as archivo_json:
+       json.dump(ajustes, archivo_json)
+ '''
+ print ("----------------------------------------")
+ print ("¡Bienvenido!)
+ print ("----------------------------------------")
+ print ("----------------------------------------")
+ print ("Antes de comenzar, necesitamos saber algunas")
+ print ("cosas sobre las que usted prefiere.")
+ print ("----------------------------------------")
+ moneda_fav = (input("¿Cual es la moneda que va usar?:"))
+ iva_fav = (input("¿Cual es el porcentaje de IVA que va usar?:"))
+ print ("----------------------------------------") 
+ print ("Gracias, si desea cambiar estos parametros,")
+ print ("dirijase a la sección 'Parametros' ")
+ print ("----------------------------------------") 
+ print ("Iniciando programa...")
+ iniciar_programa()
+ '''
+
 
 def check_csv():
  if os.path.isfile("old_calculations.csv"):
@@ -81,7 +113,7 @@ def iniciar_programa():
 
 
 
-
+primer_inicio()
 check_csv()
 iniciar_programa()
 
