@@ -5,7 +5,8 @@ import json #Esto es para guardar opciones en el futuro (guardar moneda , % favo
 from csv_commands import create_csv
 
 def primer_inicio():
-
+ #---------------------------#
+ #- VERIFICAR ARCHIVO JSON -#
  if os.path.isfile("settings.json"):
     pass
  else:
@@ -17,14 +18,16 @@ def primer_inicio():
 
     with open("settings.json", 'w') as archivo_json:
        json.dump(ajustes, archivo_json)
+ #---------------------------#
+ #---VERIFICAR ARCHIVO CSV---#
+ def check_csv():
+  if os.path.isfile("old_calculations.csv"):
+     pass
+  else:
+     create_csv()
 
-
-def check_csv():
- if os.path.isfile("old_calculations.csv"):
-    pass
- else:
-    create_csv()
-
+ check_csv()
+ #---------------------------#
 def iniciar_programa():
  print ("----------------------------------------")
  print ("¡Bienvenido a la calculadora del IVA!")
@@ -97,7 +100,6 @@ def iniciar_programa():
 
 
 primer_inicio()
-check_csv()
 iniciar_programa()
 
 
