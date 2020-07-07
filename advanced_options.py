@@ -8,7 +8,7 @@ opciones_3 = int (input("Escriba el numero correspondiente a lo que quiera hacer
 
 if opciones_3 == 1:
  os.system ("old_calculations.csv")
-
+ print ("Abriendo historial...")
 if opciones_3 == 2:
  os.remove ("old_calculations.csv")
-
+ print ("El historial ha sido eliminado con exito")
