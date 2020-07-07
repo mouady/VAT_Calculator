@@ -98,7 +98,10 @@ def iniciar_programa():
      print ("----------------------------------------")
      print ("----------------------------------------")
      input ("prompt:")
-
+ 
+ else:
+    print ("Numero escrito no valido")
+    pass 
 
 
 primer_inicio()
