@@ -1,8 +1,8 @@
-
+# Cache of Python
 __pycache__/
-
+# Settings of vscode
 .vscode
-
+# Generated data
 old_calculations.csv
 
 settings.json
