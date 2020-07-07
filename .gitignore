@@ -1,7 +1,7 @@
 __pycache__/
 
-.vscode/
+.vscode
 
-old_calculations.py/
+old_calculations.py
 
-settings.json/
+settings.json
