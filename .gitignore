@@ -1,7 +1,7 @@
-__pycache__/
+__pycache__
 
 .vscode
 
-old_calculations.py
+old_calculations.csv
 
 settings.json
