@@ -101,7 +101,7 @@ def iniciar_programa():
  
  else:
     print ("Numero escrito no valido")
-    pass 
+    input ("prompt:") 
 
 
 primer_inicio()
