@@ -41,6 +41,7 @@ def iniciar_programa():
  print ("2:Mas información")
  print ("3:Opciones avanzadas")
  print ("4:Ver creditos y version")
+ print ("5:Salir")
  opciones = int (input("Escriba el numero correspondiente a lo que quiera hacer:"))
  print ("----------------------------------------")
 
@@ -65,8 +66,7 @@ def iniciar_programa():
 
     print (f"El precio neto de su producto es de: {precio_neto_coma}€")
     nombre_calculo = str (input("¿Como desea guardar este calculo?:"))
-    print ("----------------------------------------")
-
+    
     valores_csv = [nombre_calculo,moneda,precio_bruto_coma,iva_coma,precio_neto_coma]
     
     if os.path.isfile("old_calculations.csv"):
@@ -75,10 +75,11 @@ def iniciar_programa():
           with archivo:
              writer = csv.writer(archivo_csv) 
              writer.writerow(valores_csv)
-
+    
     print ("Calculo guardado en el historial con éxito")
     print("----------------------------------------")
-    input ("prompt:")
+    input("prompt")
+    iniciar_programa()
 
 
  if opciones == 2:
@@ -87,9 +88,10 @@ def iniciar_programa():
     print ("----------------------------------------")
     print ("----------------------------------------")
     input ("prompt:")
- 
+    iniciar_programa()
+
  if opciones == 3:
-  os.system ("advanced_options.py")
+    os.system("advanced_options.py")
  
  if opciones == 4:
      print ("----------------------------------------")
@@ -98,10 +100,23 @@ def iniciar_programa():
      print ("----------------------------------------")
      print ("----------------------------------------")
      input ("prompt:")
- 
+     iniciar_programa()
+
+ if opciones== 5:
+    print ("----------------------------------------")
+    print ("¿Esta seguro de querer salir?")
+    print ("1:Si")
+    print ("2:No")
+    salir = int (input("Escriba el numero correspondiente a lo que quiera hacer:"))
+    if salir == 1:
+       exit
+    if salir == 2:
+       iniciar_programa()
+    
  else:
     print ("Numero escrito no valido")
     input ("prompt:") 
+    iniciar_programa()
 
 
 primer_inicio()

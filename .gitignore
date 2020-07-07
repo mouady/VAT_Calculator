@@ -6,3 +6,8 @@ __pycache__/
 old_calculations.csv
 
 settings.json
+
+#File of tests
+test.py
+
+.py
