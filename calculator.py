@@ -19,6 +19,7 @@ def primer_inicio():
     with open("settings.json", 'w') as archivo_json:
        json.dump(ajustes, archivo_json)
  #---------------------------#
+ 
  #---VERIFICAR ARCHIVO CSV---#
  def check_csv():
   if os.path.isfile("old_calculations.csv"):
@@ -28,6 +29,7 @@ def primer_inicio():
 
  check_csv()
  #---------------------------#
+
 def iniciar_programa():
  print ("----------------------------------------")
  print ("¡Bienvenido a la calculadora del IVA!")
