@@ -17,23 +17,6 @@ def primer_inicio():
 
     with open("settings.json", 'w') as archivo_json:
        json.dump(ajustes, archivo_json)
- '''
- print ("----------------------------------------")
- print ("¡Bienvenido!)
- print ("----------------------------------------")
- print ("----------------------------------------")
- print ("Antes de comenzar, necesitamos saber algunas")
- print ("cosas sobre las que usted prefiere.")
- print ("----------------------------------------")
- moneda_fav = (input("¿Cual es la moneda que va usar?:"))
- iva_fav = (input("¿Cual es el porcentaje de IVA que va usar?:"))
- print ("----------------------------------------") 
- print ("Gracias, si desea cambiar estos parametros,")
- print ("dirijase a la sección 'Parametros' ")
- print ("----------------------------------------") 
- print ("Iniciando programa...")
- iniciar_programa()
- '''
 
 
 def check_csv():
@@ -156,4 +139,20 @@ iniciar_programa()
 
 
  "7VEFH8RSUYX3RMQ1" or "2EH3B4MX60UDI96O"or "R2EHOO6M1WQNH0K1"
+ -------------------------------------------------------------------------------
+ print ("----------------------------------------")
+ print ("¡Bienvenido!)
+ print ("----------------------------------------")
+ print ("----------------------------------------")
+ print ("Antes de comenzar, necesitamos saber algunas")
+ print ("cosas sobre las que usted prefiere.")
+ print ("----------------------------------------")
+ moneda_fav = (input("¿Cual es la moneda que va usar?:"))
+ iva_fav = (input("¿Cual es el porcentaje de IVA que va usar?:"))
+ print ("----------------------------------------") 
+ print ("Gracias, si desea cambiar estos parametros,")
+ print ("dirijase a la sección 'Parametros' ")
+ print ("----------------------------------------") 
+ print ("Iniciando programa...")
+ iniciar_programa()
 '''
