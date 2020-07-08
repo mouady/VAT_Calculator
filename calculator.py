@@ -1,8 +1,28 @@
 build_version = "v5a1"
 import os
 import csv
+import time
 import json #Esto es para guardar opciones en el futuro (guardar moneda , % favorito {?}, usuarios)
 from csv_commands import create_csv
+
+# Codigo para mensajes dinamicos 
+if os.name == "posix":
+   borrar_mensaje = "clear"        
+elif os.name == "ce" or os.name == "nt" or os.name == "dos":
+   borrar_mensaje = "cls"
+
+# Codigo para loanding...
+def loanding_msg():
+ time.sleep(0.5)
+ print (".")
+ time.sleep(0.5)
+ os.system(borrar_mensaje)
+ print ("..")
+ time.sleep(0.5)
+ os.system(borrar_mensaje)
+ print ("...")
+ time.sleep(0.5)
+
 
 def primer_inicio():
  #---------------------------#
@@ -42,9 +62,9 @@ def iniciar_programa():
  print ("3:Opciones avanzadas")
  print ("4:Ver creditos y version")
  print ("5:Salir")
- opciones = int (input("Escriba el numero correspondiente a lo que quiera hacer:"))
  print ("----------------------------------------")
-
+ opciones = int (input("Escriba el numero correspondiente a lo que quiera hacer:"))
+ os.system(borrar_mensaje)
 
  if opciones == 1:
     print("----------------------------------------")
@@ -75,31 +95,38 @@ def iniciar_programa():
           with archivo:
              writer = csv.writer(archivo_csv) 
              writer.writerow(valores_csv)
-    
+             
+    print("----------------------------------------")
     print ("Calculo guardado en el historial con éxito")
     print("----------------------------------------")
-    input("prompt")
+    input("Presione ENTER para aceptar")
+    os.system(borrar_mensaje)
     iniciar_programa()
 
 
  if opciones == 2:
     print ("----------------------------------------")
+    print ("----------------------------------------")
     print ("Este programa se usa para calcular cual es el porcentaje de IVA \nque se deben poner a los productos. Esto puede serle útil a autonomos.")
     print ("----------------------------------------")
     print ("----------------------------------------")
-    input ("prompt:")
+    input("Presione ENTER para aceptar")
+    os.system(borrar_mensaje)
     iniciar_programa()
 
  if opciones == 3:
+    os.system(borrar_mensaje)
     os.system("advanced_options.py")
  
  if opciones == 4:
+     print ("----------------------------------------")
      print ("----------------------------------------")
      print ("Los derechos reservados del programa son para:\n© 2020 Mohamed Ahmed")
      print (f"Build: {build_version}")
      print ("----------------------------------------")
      print ("----------------------------------------")
-     input ("prompt:")
+     input("Presione ENTER para aceptar")
+     os.system(borrar_mensaje)
      iniciar_programa()
 
  if opciones== 5:
@@ -109,13 +136,17 @@ def iniciar_programa():
     print ("2:No")
     salir = int (input("Escriba el numero correspondiente a lo que quiera hacer:"))
     if salir == 1:
-       exit
+       exit()
     if salir == 2:
+       os.system(borrar_mensaje)
        iniciar_programa()
     
  else:
-    print ("Numero escrito no valido")
-    input ("prompt:") 
+    print ("----------------------------------------")
+    print (f"Numero escrito no valido \nVolviendo al menu principal...")
+    print ("----------------------------------------")
+    time.sleep(1.5)
+    os.system(borrar_mensaje)
     iniciar_programa()
 
 
