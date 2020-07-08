@@ -2,42 +2,44 @@ build_version = "v5a1"
 import os
 import csv
 import time
+import tkinter # Esto es para las interfaces graficas
 import json #Esto es para guardar opciones en el futuro (guardar moneda , % favorito {?}, usuarios)
 from csv_commands import create_csv
 
 # Codigo para mensajes dinamicos 
 if os.name == "posix":
-   borrar_mensaje = "clear"        
+   delete_msg = "clear"        
 elif os.name == "ce" or os.name == "nt" or os.name == "dos":
-   borrar_mensaje = "cls"
+   delete_msg = "cls"
+
 
 # Codigo para loanding...
 def loanding_msg():
  time.sleep(0.5)
  print (".")
  time.sleep(0.5)
- os.system(borrar_mensaje)
+ os.system(delete_msg)
  print ("..")
  time.sleep(0.5)
- os.system(borrar_mensaje)
+ os.system(delete_msg)
  print ("...")
  time.sleep(0.5)
 
 
-def primer_inicio():
+def first_boot():
  #---------------------------#
  #- VERIFICAR ARCHIVO JSON -#
  if os.path.isfile("settings.json"):
     pass
  else:
-    ajustes = {
-      "primer_inicio": "False",
-      "moneda_favorita": "",
-      "iva_favorito": ""
+    settings = {
+      "first_boot": "False",
+      "favorite_coin": "",
+      "favorite_vat": ""
    }
 
-    with open("settings.json", 'w') as archivo_json:
-       json.dump(ajustes, archivo_json)
+    with open("settings.json", 'w') as json_file:
+       json.dump(settings, json_file)
  #---------------------------#
  
  #---VERIFICAR ARCHIVO CSV---#
@@ -50,7 +52,7 @@ def primer_inicio():
  check_csv()
  #---------------------------#
 
-def iniciar_programa():
+def run_programe():
  print ("----------------------------------------")
  print ("¡Bienvenido a la calculadora del IVA!")
  print ("----------------------------------------")
@@ -63,62 +65,63 @@ def iniciar_programa():
  print ("4:Ver creditos y version")
  print ("5:Salir")
  print ("----------------------------------------")
- opciones = int (input("Escriba el numero correspondiente a lo que quiera hacer:"))
- os.system(borrar_mensaje)
+ options = int (input("Escriba el numero correspondiente a lo que quiera hacer:"))
+ os.system(delete_msg)
 
- if opciones == 1:
+ if options == 1:
     print("----------------------------------------")
     print("ADVERTENCIA: NO ESCRIBA SIMOLOS, SOLO NUMEROS")
     print("----------------------------------------")
-    precio_bruto = float (input("Escriba cual es el precio su producto:"))
-    iva = float (input("Escriba cual es el porcentaje del IVA en su pais:"))
+    gross_price = float (input("Escriba cual es el precio su producto:"))
+    vat = float (input("Escriba cual es el porcentaje del IVA en su pais:"))
 
-    impuesto = (precio_bruto*iva/100)
-    precio_neto = (precio_bruto+impuesto)
-    moneda = ("Euro")
+    tax = (gross_price*vat/100)
+    net_price = (gross_price+tax)
+    coin = ("Euro")
 
-    precio_bruto_str = str (precio_bruto)
-    precio_neto_str = str (precio_neto)
-    iva_str = str (iva)
-    precio_bruto_coma = precio_bruto_str.replace('.',',')
-    precio_neto_coma = precio_neto_str.replace('.',',')
-    iva_coma = iva_str.replace('.',',')
-
-    print (f"El precio neto de su producto es de: {precio_neto_coma}€")
-    nombre_calculo = str (input("¿Como desea guardar este calculo?:"))
+    gross_price_str = str (gross_price)
+    net_price_str = str (net_price)
+    vat_str = str (vat)
+    gross_price_comma = gross_price_str.replace('.',',')
+    net_price_comma = net_price_str.replace('.',',')
+    vat_comma = vat_str.replace('.',',')
+    print("----------------------------------------")
+    print (f"El precio neto de su producto es de: {net_price_comma}€")
+    print("----------------------------------------")
+    calculation_name = str (input("¿Como desea guardar este calculo?:"))
     
-    valores_csv = [nombre_calculo,moneda,precio_bruto_coma,iva_coma,precio_neto_coma]
+    values_csv = [calculation_name,coin,gross_price_comma,vat_comma,net_price_comma]
     
     if os.path.isfile("old_calculations.csv"):
-       with open('old_calculations.csv', 'a', newline='') as archivo_csv: 
-          archivo = open('old_calculations.csv', 'a') 
-          with archivo:
-             writer = csv.writer(archivo_csv) 
-             writer.writerow(valores_csv)
+       with open('old_calculations.csv', 'a', newline='') as file_csv: 
+          _file = open('old_calculations.csv', 'a') 
+          with _file:
+             writer = csv.writer(file_csv) 
+             writer.writerow(values_csv)
              
     print("----------------------------------------")
     print ("Calculo guardado en el historial con éxito")
     print("----------------------------------------")
     input("Presione ENTER para aceptar")
-    os.system(borrar_mensaje)
-    iniciar_programa()
+    os.system(delete_msg)
+    run_programe()
 
 
- if opciones == 2:
+ if options == 2:
     print ("----------------------------------------")
     print ("----------------------------------------")
     print ("Este programa se usa para calcular cual es el porcentaje de IVA \nque se deben poner a los productos. Esto puede serle útil a autonomos.")
     print ("----------------------------------------")
     print ("----------------------------------------")
     input("Presione ENTER para aceptar")
-    os.system(borrar_mensaje)
-    iniciar_programa()
+    os.system(delete_msg)
+    run_programe()
 
- if opciones == 3:
-    os.system(borrar_mensaje)
+ if options == 3:
+    os.system(delete_msg)
     os.system("advanced_options.py")
  
- if opciones == 4:
+ if options == 4:
      print ("----------------------------------------")
      print ("----------------------------------------")
      print ("Los derechos reservados del programa son para:\n© 2020 Mohamed Ahmed")
@@ -126,10 +129,10 @@ def iniciar_programa():
      print ("----------------------------------------")
      print ("----------------------------------------")
      input("Presione ENTER para aceptar")
-     os.system(borrar_mensaje)
-     iniciar_programa()
+     os.system(delete_msg)
+     run_programe()
 
- if opciones== 5:
+ if options== 5:
     print ("----------------------------------------")
     print ("¿Esta seguro de querer salir?")
     print ("1:Si")
@@ -138,20 +141,20 @@ def iniciar_programa():
     if salir == 1:
        exit()
     if salir == 2:
-       os.system(borrar_mensaje)
-       iniciar_programa()
+       os.system(delete_msg)
+       run_programe()
     
  else:
     print ("----------------------------------------")
     print (f"Numero escrito no valido \nVolviendo al menu principal...")
     print ("----------------------------------------")
     time.sleep(1.5)
-    os.system(borrar_mensaje)
-    iniciar_programa()
+    os.system(delete_msg)
+    run_programe()
 
 
-primer_inicio()
-iniciar_programa()
+first_boot()
+run_programe()
 
 
 '''
