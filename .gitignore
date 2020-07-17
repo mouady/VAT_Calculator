@@ -5,11 +5,9 @@ __pycache__/
 # Generated data
 old_calculations.csv
 
-settings.json
+settings.ini
 
 #File of tests
-test.py
-
 .py
 
 pruebas.py

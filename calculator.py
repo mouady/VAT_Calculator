@@ -1,83 +1,86 @@
-build_version = "v5a1"
+build_version = "v5"
 import os
 import csv
 import time
 import tkinter # Esto es para las interfaces graficas
-import json #Esto es para guardar opciones en el futuro (guardar moneda , % favorito {?}, usuarios)
-from csv_commands import create_csv
-
+from configparser import ConfigParser #Esto es para guardar opciones en el futuro (guardar moneda , % favorito {?}, usuarios)
+config = ConfigParser()
 # Codigo para mensajes dinamicos 
 if os.name == "posix":
    delete_msg = "clear"        
 elif os.name == "ce" or os.name == "nt" or os.name == "dos":
    delete_msg = "cls"
 
+#---VERIFICAR Y CREAR ARCHIVO CSV---#
+def create_csv():
+  with open('old_calculations.csv', 'a', newline='') as file_csv: #tener en cuenta newline
+    data_row1 = (['Nombre Calculo', 'Moneda', 'Precio bruto', '% IVA', 'Precio neto'])
+    _file = open('old_calculations.csv', 'a',) 
+    with _file:
+     writer = csv.writer(file_csv)
+     writer.writerow(data_row1)
 
-# Codigo para loanding...
-def loanding_msg():
- time.sleep(0.5)
- print (".")
- time.sleep(0.5)
- os.system(delete_msg)
- print ("..")
- time.sleep(0.5)
- os.system(delete_msg)
- print ("...")
- time.sleep(0.5)
-
-
-def first_boot():
- #---------------------------#
- #- VERIFICAR ARCHIVO JSON -#
- if os.path.isfile("settings.json"):
-    pass
- else:
-    settings = {
-      "first_boot": "False",
-      "favorite_coin": "",
-      "favorite_vat": ""
-   }
-
-    with open("settings.json", 'w') as json_file:
-       json.dump(settings, json_file)
- #---------------------------#
- 
- #---VERIFICAR ARCHIVO CSV---#
- def check_csv():
+def check_csv():
   if os.path.isfile("old_calculations.csv"):
      pass
   else:
      create_csv()
 
- check_csv()
- #---------------------------#
+check_csv() 
+#---------------------------#
 
 def run_programe():
  print ("----------------------------------------")
- print ("¡Bienvenido a la calculadora del IVA!")
+ print (" ¡Bienvenido a la calculadora del IVA!")
  print ("----------------------------------------")
- print ("¿Que desea hacer?")
+ print ("           ¿Que desea hacer?")
  print ("----------------------------------------")
  print ("Seleccione una opción:")
- print ("1:Calcular")
- print ("2:Mas información")
- print ("3:Opciones avanzadas")
- print ("4:Ver creditos y version")
- print ("5:Salir")
+ print ("1: Calcular (Con parametros)")
+ print ("2: Calcular (Sin parametros)")
+ print ("3: Parametros")
+ print ("4: Historial")
+ print ("5: Mas información")
+ print ("6: Ver creditos y version")
+ print ("7: Salir")
  print ("----------------------------------------")
  options = int (input("Escriba el numero correspondiente a lo que quiera hacer:"))
  os.system(delete_msg)
-
+ 
  if options == 1:
+    config.read ("settings.ini")
     print("----------------------------------------")
     print("ADVERTENCIA: NO ESCRIBA SIMOLOS, SOLO NUMEROS")
     print("----------------------------------------")
     gross_price = float (input("Escriba cual es el precio su producto:"))
-    vat = float (input("Escriba cual es el porcentaje del IVA en su pais:"))
 
+    vat = float (config["SETTINGS"]["f_vat"])
     tax = (gross_price*vat/100)
     net_price = (gross_price+tax)
-    coin = ("Euro")
+    coin = int (config["SETTINGS"]["f_coin"])
+
+
+    if coin == 1:
+       coin_word = "Dolar"
+       coin_symbol = "$"
+    if coin == 2:
+       coin_word = "Euro"
+       coin_symbol = "€"
+    if coin == 3:
+       coin_word = "Yen"
+       coin_symbol = "¥"
+    if coin == 4:
+       coin_word = "Libra"
+       coin_symbol = "£"
+    if coin == 5:
+       coin_word = "Franco Suizo"
+       coin_symbol = " Fr."
+    if coin == 6:
+       coin_word = "Peso"
+       coin_symbol = "$"
+    if coin == 7:
+       coin_word = "Yuan"
+       coin_symbol = "¥"
 
     gross_price_str = str (gross_price)
     net_price_str = str (net_price)
@@ -85,12 +88,13 @@ def run_programe():
     gross_price_comma = gross_price_str.replace('.',',')
     net_price_comma = net_price_str.replace('.',',')
     vat_comma = vat_str.replace('.',',')
+
     print("----------------------------------------")
-    print (f"El precio neto de su producto es de: {net_price_comma}€")
+    print (f"El precio neto de su producto es de: {net_price_comma}{coin_symbol}")
     print("----------------------------------------")
     calculation_name = str (input("¿Como desea guardar este calculo?:"))
     
-    values_csv = [calculation_name,coin,gross_price_comma,vat_comma,net_price_comma]
+    values_csv = [calculation_name,coin_word,gross_price_comma,vat_comma,net_price_comma]
     
     if os.path.isfile("old_calculations.csv"):
        with open('old_calculations.csv', 'a', newline='') as file_csv: 
@@ -106,8 +110,111 @@ def run_programe():
     os.system(delete_msg)
     run_programe()
 
-
  if options == 2:
+    print("----------------------------------------")
+    print("ADVERTENCIA: NO ESCRIBA SIMOLOS, SOLO NUMEROS")
+    print("----------------------------------------")
+    time.sleep(1)
+    os.system(delete_msg)
+    print ("----------------------------------------")
+    print ("   ¿Cual es la moneda que va usar?")
+    print ("----------------------------------------")
+    time.sleep(1)
+    print ("1:Dolares ($)")
+    print ("2:Euros (€)")
+    print ("3:Yenes (¥)")
+    print ("4:Libras (£)")
+    print ("5:Francos suizos (Fr.)")
+    print ("6:Pesos ($)")
+    print ("7:Yuanes (¥)")
+    print ("----------------------------------------")
+    coin = int (input("Escriba el numero correspondiente:"))
+    os.system(delete_msg)
+    gross_price = float (input("Escriba cual es el precio su producto:"))
+    vat = float (input("Escriba cual es el porcentaje del IVA en su pais:"))
+
+    if coin == 1:
+       coin_word = "Dolar"
+       coin_symbol = "$"
+    if coin == 2:
+       coin_word = "Euro"
+       coin_symbol = "€"
+    if coin == 3:
+       coin_word = "Yen"
+       coin_symbol = "¥"
+    if coin == 4:
+       coin_word = "Libra"
+       coin_symbol = "£"
+    if coin == 5:
+       coin_word = "Franco Suizo"
+       coin_symbol = " Fr."
+    if coin == 6:
+       coin_word = "Peso"
+       coin_symbol = "$"
+    if coin == 7:
+       coin_word = "Yuan"
+       coin_symbol = "¥"
+
+    tax = (gross_price*vat/100)
+    net_price = (gross_price+tax)
+    
+
+    gross_price_str = str (gross_price)
+    net_price_str = str (net_price)
+    vat_str = str (vat)
+    gross_price_comma = gross_price_str.replace('.',',')
+    net_price_comma = net_price_str.replace('.',',')
+    vat_comma = vat_str.replace('.',',')
+    print("----------------------------------------")
+    print (f"El precio neto de su producto es de: {net_price_comma}{coin_symbol}")
+    print("----------------------------------------")
+    calculation_name = str (input("¿Como desea guardar este calculo?:"))
+    
+    values_csv = [calculation_name,coin_word,gross_price_comma,vat_comma,net_price_comma]
+    
+    if os.path.isfile("old_calculations.csv"):
+       with open('old_calculations.csv', 'a', newline='') as file_csv: 
+          _file = open('old_calculations.csv', 'a') 
+          with _file:
+             writer = csv.writer(file_csv) 
+             writer.writerow(values_csv)
+             
+    print("----------------------------------------")
+    print ("Calculo guardado en el historial con éxito")
+    print("----------------------------------------")
+    input("Presione ENTER para aceptar")
+    os.system(delete_msg)
+    run_programe()
+
+ if options == 3:
+    print("----------------------------------------")
+    print ("¿Esta seguro de querer cambiar los parametros?")
+    print("----------------------------------------")
+    print ("Los parametros de antes se borraran y usted tendra")
+    print ("que escribir otros nuevos.")
+    print("----------------------------------------")
+
+    print ("1: Si")
+    print ("2: No")
+    print("----------------------------------------")
+    salir = int (input("Escriba el numero correspondiente a lo que quiera hacer:"))
+    if salir == 1:
+       os.system(delete_msg)
+       os.system("parameters.py") 
+    if salir == 2:
+       os.system(delete_msg)
+       run_programe()
+
+    os.system(delete_msg)
+    os.system("parameters.py") 
+
+
+ if options == 4:
+    os.system(delete_msg)
+    os.system("record.py")
+    
+
+ if options == 5:
     print ("----------------------------------------")
     print ("----------------------------------------")
     print ("Este programa se usa para calcular cual es el porcentaje de IVA \nque se deben poner a los productos. Esto puede serle útil a autonomos.")
@@ -116,12 +223,8 @@ def run_programe():
     input("Presione ENTER para aceptar")
     os.system(delete_msg)
     run_programe()
-
- if options == 3:
-    os.system(delete_msg)
-    os.system("advanced_options.py")
  
- if options == 4:
+ if options == 6:
      print ("----------------------------------------")
      print ("----------------------------------------")
      print ("Los derechos reservados del programa son para:\n© 2020 Mohamed Ahmed")
@@ -132,11 +235,12 @@ def run_programe():
      os.system(delete_msg)
      run_programe()
 
- if options== 5:
+ if options== 7:
     print ("----------------------------------------")
     print ("¿Esta seguro de querer salir?")
-    print ("1:Si")
-    print ("2:No")
+    print ("1: Si")
+    print ("2: No")
+    print ("----------------------------------------")
     salir = int (input("Escriba el numero correspondiente a lo que quiera hacer:"))
     if salir == 1:
        exit()
@@ -153,7 +257,7 @@ def run_programe():
     run_programe()
 
 
-first_boot()
+
 run_programe()
 
 
@@ -197,7 +301,7 @@ run_programe()
  "7VEFH8RSUYX3RMQ1" or "2EH3B4MX60UDI96O"or "R2EHOO6M1WQNH0K1"
  -------------------------------------------------------------------------------
  print ("----------------------------------------")
- print ("¡Bienvenido!)
+ print ("¡Bienvenido")
  print ("----------------------------------------")
  print ("----------------------------------------")
  print ("Antes de comenzar, necesitamos saber algunas")
