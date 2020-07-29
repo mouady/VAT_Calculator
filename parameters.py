@@ -10,29 +10,29 @@ elif os.name == "ce" or os.name == "nt" or os.name == "dos":
 
 def error_select():
    print ("----------------------------------------")
-   print (f"Numero escrito no valido \nIntentelo de nuevo...")
+   print (f"Numbrer typed isn't valid \nReturning to the principal menu...")
    print ("----------------------------------------")
    time.sleep(1.5)
    os.system(delete_msg)
    os.system("parameters.py")
 
 print ("-----------------------------------------------")
-print ("ADVERTENCIA: NO ESCRIBA SIMOLOS, SOLO NUMEROS")
+print ("WARNING: DON'T TYPE SYMBOLS, ONLY NUMBERS")
 print ("-----------------------------------------------")
 time.sleep(1.5)
 print ("----------------------------------------")
-print ("   ¿Cual es la moneda que va usar?")
+print (" What is the coin that you want to use?")
 print ("----------------------------------------")
 time.sleep(1)
-print ("1:Dolares ($)")
+print ("1:Dolars($)")
 print ("2:Euros (€)")
-print ("3:Yenes (¥)")
-print ("4:Libras (£)")
-print ("5:Francos suizos (Fr.)")
+print ("3:Yens (¥)")
+print ("4:Pounds (£)")
+print ("5:Swiss francs (Fr.)")
 print ("6:Pesos ($)")
-print ("7:Yuanes (¥)")
+print ("7:Yuans (¥)")
 print ("----------------------------------------")
-favorite_coin = int (input("Escriba el numero correspondiente a lo que quiera hacer:"))
+favorite_coin = int (input("Type the corresponding number of the option you want:"))
 
 config = cf.ConfigParser()
 
@@ -40,7 +40,7 @@ if favorite_coin > 7:
      error_select()
  
 print ("----------------------------------------")
-favorite_vat = float (input("¿Cual es el porcentaje de IVA que va usar?:"))
+favorite_vat = float (input("Type the percentage VAT of your country:"))
 
 if favorite_vat > 100:
      error_select()
@@ -56,10 +56,10 @@ with open("settings.ini", "w") as configfile:
 
 os.system(delete_msg)
 print ("----------------------------------------") 
-print ("        -PARAMETROS GUARDADOS-") 
+print ("          -PARAMETERS SAVED-") 
 print ("----------------------------------------") 
-print ("Si desea cambiar estos parametros,")
-print ("dirijase a la sección 'Parametros' ")
+print ("If you want to change this parameters,")
+print ("go to the section 'Parameters' ")
 print ("----------------------------------------")
 time.sleep(3)
 os.system(delete_msg) 
