@@ -3,9 +3,9 @@ import os
 import csv
 import time
 import tkinter # This is for future tkinter interfaces
-from configparser import ConfigParser #This id for save options (save fav coin , % favorite {?}, users)
+from configparser import ConfigParser # This is for save options (save fav coin , % favorite {?}, users)
 config = ConfigParser()
-# Codode for dinamic msg's
+# Code for dinamic msg's
 if os.name == "posix":
    delete_msg = "clear"        
 elif os.name == "ce" or os.name == "nt" or os.name == "dos":
@@ -27,7 +27,7 @@ def check_csv():
      create_csv()
 
 check_csv() 
-#---------------------------#
+#--------------------------------#
 
 def run_programe():
  print ("----------------------------------------")
@@ -259,60 +259,3 @@ def run_programe():
 
 
 run_programe()
-
- #UNUSED CODE
-'''
- -- LINEAS DE CODIGO QUE PUEDEN SER ÚTILES --
-    print ("----------------------------------------")
-    print ("Clave no valida, intentelo de nuevo")
-    print ("----------------------------------------")
-
-    key = str (input("Ingrese la clave del producto (Con guiones):"))
-
- -------------------------------------------------------
-
-    build_version = "v1.2"
- key = str
- from verify_key import *
- check_key()
- print ("----------------------------------------")
- print ("Para empezar, necesitamos verificar su producto")
- key = str (input("Escriba la clave de producto (Con guiones):"))
- print ("----------------------------------------")
-
- -------------------------------------------------------------------------------
-
- build_version = "v2.0a"
-
- from verify_key import *
- print ("----------------------------------------")
- print ("Para empezar, necesitamos verificar su producto")
- key = str (input("Escriba la clave de producto (Con guiones):"))
- print ("----------------------------------------")
- check_key()
-
- if activate_key == True:
-    iniciar_programa()
-
- if activate_key == False:
-    cerrar_programa()
-
-
- "7VEFH8RSUYX3RMQ1" or "2EH3B4MX60UDI96O"or "R2EHOO6M1WQNH0K1"
- -------------------------------------------------------------------------------
- print ("----------------------------------------")
- print ("¡Bienvenido")
- print ("----------------------------------------")
- print ("----------------------------------------")
- print ("Antes de comenzar, necesitamos saber algunas")
- print ("cosas sobre las que usted prefiere.")
- print ("----------------------------------------")
- moneda_fav = (input("¿Cual es la moneda que va usar?:"))
- iva_fav = (input("¿Cual es el porcentaje de IVA que va usar?:"))
- print ("----------------------------------------") 
- print ("Gracias, si desea cambiar estos parametros,")
- print ("dirijase a la sección 'Parametros' ")
- print ("----------------------------------------") 
- print ("Iniciando programa...")
- iniciar_programa()
-'''
