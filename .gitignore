@@ -1,7 +1,8 @@
 # Cache of Python
 __pycache__/
-# Settings of vscode
+# Settings of vscode/pycharm
 .vscode
+.idea
 # Generated data
 old_calculations.csv
 
