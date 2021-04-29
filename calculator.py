@@ -1,261 +1,257 @@
-build_version = "v5"
 import os
 import csv
 import time
-import tkinter # This is for future tkinter interfaces
-from configparser import ConfigParser # This is for save options (save fav coin , % favorite {?}, users)
-config = ConfigParser()
-# Code for dinamic msg's
-if os.name == "posix":
-   delete_msg = "clear"        
-elif os.name == "ce" or os.name == "nt" or os.name == "dos":
-   delete_msg = "cls"
+import modules
+# import tkinter -> This is for future tkinter interfaces
 
-#---VERIFY AND CREATE CSV FILE---#
+
+# ---VERIFY AND CREATE CSV FILE---#
 def create_csv():
-  with open('old_calculations.csv', 'a', newline='') as file_csv: 
-    data_row1 = (['Name Calculation', 'Coin', 'Gross price', '% VAT', 'Net price'])
-    _file = open('old_calculations.csv', 'a',) 
-    with _file:
-     writer = csv.writer(file_csv)
-     writer.writerow(data_row1)
+    with open('old_calculations.csv', 'a', newline='') as file_csv:
+        data_row1 = (['Name Calculation', 'Coin', 'Gross price', '% VAT', 'Net price'])
+        _file = open('old_calculations.csv', 'a', )
+        with _file:
+            writer = csv.writer(file_csv)
+            writer.writerow(data_row1)
+
 
 def check_csv():
-  if os.path.isfile("old_calculations.csv"):
-     pass
-  else:
-     create_csv()
+    if os.path.isfile("old_calculations.csv"):
+        pass
+    else:
+        create_csv()
 
-check_csv() 
-#--------------------------------#
+
+check_csv()
+
+
+# --------------------------------#
 
 def run_programe():
- print ("----------------------------------------")
- print ("    ¡Welcome to the VAT Calculator!")
- print ("----------------------------------------")
- print ("        What do you want to do?")
- print ("----------------------------------------")
- print ("Select an option:")
- print ("1: Calculate (With parameters)")
- print ("2: Calculate (Without parameters)")
- print ("3: Parameters")
- print ("4: Calculating History")
- print ("5: More information")
- print ("6: Show credits and version")
- print ("7: Exit")
- print ("----------------------------------------")
- options = int (input("Type the corresponding number of the option you want:"))
- os.system(delete_msg)
- 
- if options == 1:
-    config.read ("settings.ini")
     print("----------------------------------------")
-    print("WARNING: DON'T TYPE SYMBOLS, ONLY NUMBERS")
+    print("    ¡Welcome to the VAT Calculator!")
     print("----------------------------------------")
-    gross_price = float (input("Type the price of your product:"))
-
-    vat = float (config["SETTINGS"]["f_vat"])
-    tax = (gross_price*vat/100)
-    net_price = (gross_price+tax)
-    coin = int (config["SETTINGS"]["f_coin"])
-
-
-    if coin == 1:
-       coin_word = "Dolar"
-       coin_symbol = "$"
-    if coin == 2:
-       coin_word = "Euro"
-       coin_symbol = "€"
-    if coin == 3:
-       coin_word = "Yen"
-       coin_symbol = "¥"
-    if coin == 4:
-       coin_word = "pound"
-       coin_symbol = "£"
-    if coin == 5:
-       coin_word = "Swiss franc"
-       coin_symbol = " Fr."
-    if coin == 6:
-       coin_word = "Peso"
-       coin_symbol = "$"
-    if coin == 7:
-       coin_word = "Yuan"
-       coin_symbol = "¥"
-
-    gross_price_str = str (gross_price)
-    net_price_str = str (net_price)
-    vat_str = str (vat)
-    gross_price_comma = gross_price_str.replace('.',',')
-    net_price_comma = net_price_str.replace('.',',')
-    vat_comma = vat_str.replace('.',',')
-
+    print("        What do you want to do?")
     print("----------------------------------------")
-    print (f"The net price of your product is: {net_price_comma}{coin_symbol}")
+    print("Select an option:")
+    print("1: Calculate (With parameters)")
+    print("2: Calculate (Without parameters)")
+    print("3: Parameters")
+    print("4: Calculating History")
+    print("5: More information")
+    print("6: Show credits and version")
+    print("7: Exit")
     print("----------------------------------------")
-    calculation_name = str (input("How do you want to name this calculation?:"))
-    
-    values_csv = [calculation_name,coin_word,gross_price_comma,vat_comma,net_price_comma]
-    
-    if os.path.isfile("old_calculations.csv"):
-       with open('old_calculations.csv', 'a', newline='') as file_csv: 
-          _file = open('old_calculations.csv', 'a') 
-          with _file:
-             writer = csv.writer(file_csv) 
-             writer.writerow(values_csv)
-             
-    print("----------------------------------------")
-    print ("The calculation has been saved in the \ncalculation history successfuly")
-    print("----------------------------------------")
-    input("Press ENTER to accept")
-    os.system(delete_msg)
-    run_programe()
+    options = int(input("Type the corresponding number of the option you want:"))
+    os.system(modules.delete_msg)
 
- if options == 2:
-    print("----------------------------------------")
-    print("WARNING: DON'T TYPE SYMBOLS, ONLY NUMBERS")
-    print("----------------------------------------")
-    time.sleep(1)
-    os.system(delete_msg)
-    print ("----------------------------------------")
-    print (" What is the coin that you want to use?")
-    print ("----------------------------------------")
-    time.sleep(1)
-    print ("1:Dolars ($)")
-    print ("2:Euros (€)")
-    print ("3:Yens (¥)")
-    print ("4:Pounds (£)")
-    print ("5:Swiss francs (Fr.)")
-    print ("6:Pesos ($)")
-    print ("7:Yuans (¥)")
-    print ("----------------------------------------")
-    coin = int (input("Type the corresponding number of the option you want:"))
-    os.system(delete_msg)
-    gross_price = float (input("Type the price of your product:"))
-    vat = float (input("Type the percentage VAT of your country:"))
+    if options == 1:
+        modules.config.read("settings.ini")
+        print("----------------------------------------")
+        print("WARNING: DON'T TYPE SYMBOLS, ONLY NUMBERS")
+        print("----------------------------------------")
+        gross_price = float(input("Type the price of your product:"))
 
-    if coin == 1:
-       coin_word = "Dolar"
-       coin_symbol = "$"
-    if coin == 2:
-       coin_word = "Euro"
-       coin_symbol = "€"
-    if coin == 3:
-       coin_word = "Yen"
-       coin_symbol = "¥"
-    if coin == 4:
-       coin_word = "Libra"
-       coin_symbol = "£"
-    if coin == 5:
-       coin_word = "Franco Suizo"
-       coin_symbol = " Fr."
-    if coin == 6:
-       coin_word = "Peso"
-       coin_symbol = "$"
-    if coin == 7:
-       coin_word = "Yuan"
-       coin_symbol = "¥"
+        vat = float(modules.config["SETTINGS"]["f_vat"])
+        tax = (gross_price * vat / 100)
+        net_price = (gross_price + tax)
+        coin = int(modules.config["SETTINGS"]["f_coin"])
 
-    tax = (gross_price*vat/100)
-    net_price = (gross_price+tax)
-    
+        if coin == 1:
+            coin_word = "Dollar"
+            coin_symbol = "$"
+        if coin == 2:
+            coin_word = "Euro"
+            coin_symbol = "€"
+        if coin == 3:
+            coin_word = "Yen"
+            coin_symbol = "¥"
+        if coin == 4:
+            coin_word = "pound"
+            coin_symbol = "£"
+        if coin == 5:
+            coin_word = "Swiss franc"
+            coin_symbol = " Fr."
+        if coin == 6:
+            coin_word = "Peso"
+            coin_symbol = "$"
+        if coin == 7:
+            coin_word = "Yuan"
+            coin_symbol = "¥"
 
-    gross_price_str = str (gross_price)
-    net_price_str = str (net_price)
-    vat_str = str (vat)
-    gross_price_comma = gross_price_str.replace('.',',')
-    net_price_comma = net_price_str.replace('.',',')
-    vat_comma = vat_str.replace('.',',')
-    print("----------------------------------------")
-    print (f"The net price of your product is: {net_price_comma}{coin_symbol}")
-    print("----------------------------------------")
-    calculation_name = str (input("How do you want to name this calculation?:"))
-    
-    values_csv = [calculation_name,coin_word,gross_price_comma,vat_comma,net_price_comma]
-    
-    if os.path.isfile("old_calculations.csv"):
-       with open('old_calculations.csv', 'a', newline='') as file_csv: 
-          _file = open('old_calculations.csv', 'a') 
-          with _file:
-             writer = csv.writer(file_csv) 
-             writer.writerow(values_csv)
-             
-    print("----------------------------------------")
-    print ("The calculation has been saved in the \ncalculation history successfuly")
-    print("----------------------------------------")
-    input("Press ENTER to accept")
-    os.system(delete_msg)
-    run_programe()
+        gross_price_str = str(gross_price)
+        net_price_str = str(net_price)
+        vat_str = str(vat)
+        gross_price_comma = gross_price_str.replace('.', ',')
+        net_price_comma = net_price_str.replace('.', ',')
+        vat_comma = vat_str.replace('.', ',')
 
- if options == 3:
-    print("----------------------------------------")
-    print ("Are you sure of change the parameters?")
-    print("----------------------------------------")
-    print ("The olds parameters will be deleted and you")
-    print ("will type other new parameters ")
-    print("----------------------------------------")
+        print("----------------------------------------")
+        print(f"The net price of your product is: {net_price_comma}{coin_symbol}")
+        print("----------------------------------------")
+        calculation_name = str(input("How do you want to name this calculation?:"))
 
-    print ("1: Yes")
-    print ("2: No")
-    print("----------------------------------------")
-    salir = int (input("Type the corresponding number of the option you want:"))
-    if salir == 1:
-       os.system(delete_msg)
-       os.system("parameters.py") 
-    if salir == 2:
-       os.system(delete_msg)
-       run_programe()
+        values_csv = [calculation_name, coin_word, gross_price_comma, vat_comma, net_price_comma]
 
-    os.system(delete_msg)
-    os.system("parameters.py") 
+        if os.path.isfile("old_calculations.csv"):
+            with open('old_calculations.csv', 'a', newline='') as file_csv:
+                _file = open('old_calculations.csv', 'a')
+                with _file:
+                    writer = csv.writer(file_csv)
+                    writer.writerow(values_csv)
 
+        print("----------------------------------------")
+        print("The calculation has been saved in the \ncalculation history successfully")
+        print("----------------------------------------")
+        input("Press ENTER to accept")
+        os.system(modules.delete_msg)
+        run_programe()
 
- if options == 4:
-    os.system(delete_msg)
-    os.system("record.py")
-    
+    if options == 2:
+        print("----------------------------------------")
+        print("WARNING: DON'T TYPE SYMBOLS, ONLY NUMBERS")
+        print("----------------------------------------")
+        time.sleep(1)
+        os.system(modules.delete_msg)
+        print("----------------------------------------")
+        print(" What is the coin that you want to use?")
+        print("----------------------------------------")
+        time.sleep(1)
+        print("1:Dollars ($)")
+        print("2:Euros (€)")
+        print("3:Yens (¥)")
+        print("4:Pounds (£)")
+        print("5:Swiss francs (Fr.)")
+        print("6:Pesos ($)")
+        print("7:Yuan's (¥)")
+        print("----------------------------------------")
+        coin = int(input("Type the corresponding number of the option you want:"))
+        os.system(modules.delete_msg)
+        gross_price = float(input("Type the price of your product:"))
+        vat = float(input("Type the percentage VAT of your country:"))
 
- if options == 5:
-    print ("----------------------------------------")
-    print ("----------------------------------------")
-    print ("This program is used to calculate what is the percentage of VAT \n that must be put on the products. This can be useful to self-employed.")
-    print ("----------------------------------------")
-    print ("----------------------------------------")
-    input("Press ENTER to accept")
-    os.system(delete_msg)
-    run_programe()
- 
- if options == 6:
-     print ("----------------------------------------")
-     print ("----------------------------------------")
-     print ("The rights of this program are of:\n© 2020 Mohamed Ahmed")
-     print (f"Build: {build_version}")
-     print ("----------------------------------------")
-     print ("----------------------------------------")
-     input("Press ENTER to accept")
-     os.system(delete_msg)
-     run_programe()
+        if coin == 1:
+            coin_word = "Dollar"
+            coin_symbol = "$"
+        if coin == 2:
+            coin_word = "Euro"
+            coin_symbol = "€"
+        if coin == 3:
+            coin_word = "Yen"
+            coin_symbol = "¥"
+        if coin == 4:
+            coin_word = "Libra"
+            coin_symbol = "£"
+        if coin == 5:
+            coin_word = "Swiss franc"
+            coin_symbol = " Fr."
+        if coin == 6:
+            coin_word = "Peso"
+            coin_symbol = "$"
+        if coin == 7:
+            coin_word = "Yuan"
+            coin_symbol = "¥"
 
- if options== 7:
-    print ("----------------------------------------")
-    print ("Are you sure to accept?")
-    print ("1: Yes")
-    print ("2: No")
-    print ("----------------------------------------")
-    salir = int (input("Type the corresponding number of the option you want:"))
-    if salir == 1:
-       exit()
-    if salir == 2:
-       os.system(delete_msg)
-       run_programe()
-    
- else:
-    print ("----------------------------------------")
-    print (f"Numbrer typed isn't valid \nReturning to the principal menu...")
-    print ("----------------------------------------")
-    time.sleep(1.5)
-    os.system(delete_msg)
-    run_programe()
+        tax = (gross_price * vat / 100)
+        net_price = (gross_price + tax)
 
+        gross_price_str = str(gross_price)
+        net_price_str = str(net_price)
+        vat_str = str(vat)
+        gross_price_comma = gross_price_str.replace('.', ',')
+        net_price_comma = net_price_str.replace('.', ',')
+        vat_comma = vat_str.replace('.', ',')
+        print("----------------------------------------")
+        print(f"The net price of your product is: {net_price_comma}{coin_symbol}")
+        print("----------------------------------------")
+        calculation_name = str(input("How do you want to name this calculation?:"))
+
+        values_csv = [calculation_name, coin_word, gross_price_comma, vat_comma, net_price_comma]
+
+        if os.path.isfile("old_calculations.csv"):
+            with open('old_calculations.csv', 'a', newline='') as file_csv:
+                _file = open('old_calculations.csv', 'a')
+                with _file:
+                    writer = csv.writer(file_csv)
+                    writer.writerow(values_csv)
+
+        print("----------------------------------------")
+        print("The calculation has been saved in the \ncalculation history successfully")
+        print("----------------------------------------")
+        input("Press ENTER to accept")
+        os.system(modules.delete_msg)
+        run_programe()
+
+    if options == 3:
+        print("----------------------------------------")
+        print("Are you sure of change the parameters?")
+        print("----------------------------------------")
+        print("The olds parameters will be deleted and you")
+        print("will type other new parameters ")
+        print("----------------------------------------")
+
+        print("1: Yes")
+        print("2: No")
+        print("----------------------------------------")
+        exit_3 = int(input("Type the corresponding number of the option you want:"))
+        if exit_3 == 1:
+            os.system(modules.delete_msg)
+            os.system("parameters.py")
+        if exit_3 == 2:
+            os.system(modules.delete_msg)
+            run_programe()
+
+        os.system(modules.delete_msg)
+        os.system("parameters.py")
+
+    if options == 4:
+        os.system(modules.delete_msg)
+        os.system("record.py")
+
+    if options == 5:
+        print("----------------------------------------")
+        print("----------------------------------------")
+        print(
+            "This program is used to calculate what is the percentage of VAT \n that must be put on the products. "
+            "This can be useful to self-employed.")
+        print("----------------------------------------")
+        print("----------------------------------------")
+        input("Press ENTER to accept")
+        os.system(modules.delete_msg)
+        run_programe()
+
+    if options == 6:
+
+        print("----------------------------------------")
+        print("----------------------------------------")
+        print("The rights of this program are of:\n© 2020 Mohamed Ahmed")
+        print(f"Build: {modules.build_version}")
+        print("----------------------------------------")
+        print("----------------------------------------")
+        input("Press ENTER to accept")
+        os.system(modules.delete_msg)
+        run_programe()
+
+    if options == 7:
+        print("----------------------------------------")
+        print("Are you sure to accept?")
+        print("1: Yes")
+        print("2: No")
+        print("----------------------------------------")
+        exit_7 = int(input("Type the corresponding number of the option you want:"))
+        if exit_7 == 1:
+            exit()
+        if exit_7 == 2:
+            os.system(modules.delete_msg)
+            run_programe()
+
+    else:
+        print("----------------------------------------")
+        print(f"Number typed isn't valid \nReturning to the principal menu...")
+        print("----------------------------------------")
+        time.sleep(1.5)
+        os.system(modules.delete_msg)
+        run_programe()
 
 
 run_programe()
