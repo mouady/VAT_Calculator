@@ -107,6 +107,9 @@ def options_2():
         VAT_CALC.run_calculator,
         True)
 
+    if vat > 100:
+        modules.invalid_number(VAT_CALC.run_calculator)
+
     if coin == 1:
         coin_word = "Dollar"
         coin_symbol = "$"

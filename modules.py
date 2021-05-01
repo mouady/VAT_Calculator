@@ -5,7 +5,7 @@ import configparser as cf
 # import tkinter -> This is for future tkinter interfaces
 
 
-build_version = "v5"
+build_version = "v6"
 
 config = cf.ConfigParser()
 

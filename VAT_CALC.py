@@ -61,7 +61,7 @@ def menu_options():
         modules.invalid_number(run_calculator)
 
 
-def inicialization():
+def run_vat():
     if os.path.isfile("settings.ini"):
         run_calculator()
 
@@ -84,4 +84,4 @@ def inicialization():
 
 
 if __name__ == "__main__":
-    inicialization()
+    run_vat()
