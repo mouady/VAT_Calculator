@@ -60,7 +60,6 @@ def invalid_number(returning_action: any):
 
 
 long_msg = """
----------------------------------------------------------
 You will have 2 options to perform
 your calculations in this program.
 
@@ -83,5 +82,4 @@ your calculations in this program.
 Regardless of which option you choose, below
 it will ask you the parameters that you want, you can
 change at any time in the "Parameters" section
------------------------------------------------------------
 """
