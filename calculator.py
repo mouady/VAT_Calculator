@@ -8,7 +8,7 @@ import record
 
 
 def options_1():
-    modules.config.read("settings.ini")
+    modules.config.read("confg/settings.ini")
     print("----------------------------------------")
     print("WARNING: DON'T TYPE SYMBOLS, ONLY NUMBERS")
     print("----------------------------------------")
@@ -58,9 +58,9 @@ def options_1():
 
     values_csv = [calculation_name, coin_word, gross_price_comma, vat_comma, net_price_comma]
 
-    if os.path.isfile("old_calculations.csv"):
-        with open('old_calculations.csv', 'a', newline='') as file_csv:
-            _file = open('old_calculations.csv', 'a')
+    if os.path.isfile("log/calculation_log.csv"):
+        with open('log/calculation_log.csv', 'a', newline='') as file_csv:
+            _file = open('log/calculation_log.csv', 'a')
             with _file:
                 writer = csv.writer(file_csv)
                 writer.writerow(values_csv)
@@ -148,9 +148,9 @@ def options_2():
 
     values_csv = [calculation_name, coin_word, gross_price_comma, vat_comma, net_price_comma]
 
-    if os.path.isfile("old_calculations.csv"):
-        with open('old_calculations.csv', 'a', newline='') as file_csv:
-            _file = open('old_calculations.csv', 'a')
+    if os.path.isfile("log/calculation_log.csv"):
+        with open('log/calculation_log.csv', 'a', newline='') as file_csv:
+            _file = open('log/calculation_log.csv', 'a')
             with _file:
                 writer = csv.writer(file_csv)
                 writer.writerow(values_csv)

@@ -26,7 +26,7 @@ def options_record():
     if r_options == 1:
         print("----------------------------------------")
         print("Opening history...")
-        os.system("old_calculations.csv")
+        modules.open_file("log/calculation_log.csv")
         os.system(modules.delete_msg)
         print("----------------------------------------")
         print("The history has been open")
@@ -36,7 +36,7 @@ def options_record():
         run_record()
 
     if r_options == 2:
-        os.remove("old_calculations.csv")
+        os.remove("log/calculation_log.csv")
         print("----------------------------------------")
         print("The history has been deleted successfully")
         print("----------------------------------------")

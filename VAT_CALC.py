@@ -62,7 +62,7 @@ def menu_options():
 
 
 def run_vat():
-    if os.path.isfile("settings.ini"):
+    if os.path.isfile("confg/settings.ini"):
         run_calculator()
 
     else:

@@ -45,7 +45,7 @@ def run_parameters():
 
     }
 
-    with open("settings.ini", "w") as configfile:
+    with open("confg/settings.ini", "w") as configfile:
         modules.config.write(configfile)
 
     os.system(modules.delete_msg)

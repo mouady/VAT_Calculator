@@ -1,7 +1,10 @@
 import os
+import platform
+import subprocess
 import time
 import csv
 import configparser as cf
+
 # import tkinter -> This is for future tkinter interfaces
 
 
@@ -16,16 +19,16 @@ elif os.name == "ce" or os.name == "nt" or os.name == "dos":
 
 
 def create_csv():
-    with open('old_calculations.csv', 'a', newline='') as file_csv:
+    with open('log/calculation_log.csv', 'a', newline='') as file_csv:
         data_row1 = (['Name Calculation', 'Coin', 'Gross price', '% VAT', 'Net price'])
-        _file = open('old_calculations.csv', 'a', )
+        _file = open('log/calculation_log.csv', 'a', )
         with _file:
             writer = csv.writer(file_csv)
             writer.writerow(data_row1)
 
 
 def check_csv():
-    if os.path.isfile("old_calculations.csv"):
+    if os.path.isfile("log/calculation_log.csv"):
         pass
     else:
         create_csv()
@@ -57,6 +60,59 @@ def invalid_number(returning_action: any):
     time.sleep(1.5)
     os.system(delete_msg)
     returning_action()
+
+
+def check_sameproduct(product: str):
+    csv_file = csv.reader(open('log/calculation_log.csv', "r"), delimiter=",")
+
+    for row in csv_file:
+        try:
+            if product == row[0]:
+                return True
+        except IndexError:
+            pass
+
+
+def change_points_comma(var: any):
+    if type(var) == str:
+        var_str = var
+    elif not type(var) == str:
+        var_str = str(var)
+
+    if var_str.find(".") != -1:
+        return var_str.replace('.', ',')
+
+    elif var_str.find(".") == -1:
+        return float(var_str.replace(',', '.'))
+
+
+def open_file(filepath: any):
+    if platform.system() == 'Darwin':  # macOS
+        subprocess.call(('open', filepath))
+    elif platform.system() == 'Windows':  # Windows
+        os.startfile(filepath)
+    else:  # linux variants
+        subprocess.call(('xdg-open', filepath))
+
+
+def calculate(product_name: str, coin_word: str, gross_price: float, vat: float):
+    tax = gross_price * vat / 100
+    net_price = (gross_price + tax)
+
+    values_csv = [product_name,
+                  coin_word,
+                  change_points_comma(gross_price),
+                  change_points_comma(vat),
+                  change_points_comma(net_price)]
+
+    if os.path.isfile("log/calculation_log.csv"):
+        with open('log/calculation_log.csv', 'a', newline='') as file_csv:
+            _file = open('log/calculation_log.csv', 'a')
+            with _file:
+                writer = csv.writer(file_csv)
+                writer.writerow(values_csv)
+
+
 
 
 long_msg = """
