@@ -15,6 +15,7 @@ import parameters
 import VAT_CALC
 import record
 import tests
+import shutil
 
 
 class calculate(QDialog):
@@ -22,41 +23,42 @@ class calculate(QDialog):
     def __init__(self):
         super(calculate, self).__init__()
         uic.loadUi("gui/calculate.ui", self)
-        self.bn_save.clicked.connect(self.fn_save)
+        self.bn_save.clicked.connect(self.fn_calculate)
 
     # Calculations
 
-    def fn_input(self):
+    def fn_calculate(self):
         in_product_name = self.box_productname.text()
         in_currency = self.box_currency.currentText()
         in_gross_price = modules.change_points_comma(self.box_price.text())
         in_vat = modules.change_points_comma(self.box_vat.text())
 
-        if in_product_name is None:
-            self.fn_set_noproductname_mg()
-
-        elif modules.check_sameproduct(in_product_name):
-            self.fn_set_sameproduct_mg()
+        if in_product_name == "":
+            if self.lb_saved.text() == "There's no Product Name!":
+                self.fn_fade(1)
+            else:
+                self.fn_set_noproductname_mg()
 
         elif in_gross_price == 0:
-            self.fn_set_noprice_mg()
+            if self.lb_saved.text() == "There's no Price!":
+                self.fn_fade(2)
+            else:
+                self.fn_set_noprice_mg()
+
+        elif modules.check_sameproduct(in_product_name):
+            if self.lb_saved.text() == "There's a product with the same name!":
+                self.fn_fade(3)
+            else:
+                self.fn_set_sameproduct_mg()
 
         else:
-            modules.calculate(in_product_name, in_currency, in_gross_price, in_vat)
-            self.fn_set_success_mg()
+            if self.lb_saved.text() == "Product saved successfully!":
+                modules.calculate(in_product_name, in_currency, in_gross_price, in_vat)
+                self.fn_fade(0)
 
-    # Buttons
-    def fn_save(self):
-        if self.lb_saved.text() == "Product saved successfully!":
-            self.fn_fade(0)
-        elif self.lb_saved.text() == "There's no Product Name!":
-            self.fn_fade(1)
-        elif self.lb_saved.text() == "There's no Price!":
-            self.fn_fade(2)
-        elif self.lb_saved.text() == "There's a product with the same name!":
-            self.fn_fade(3)
-        else:
-            self.fn_input()
+            else:
+                modules.calculate(in_product_name, in_currency, in_gross_price, in_vat)
+                self.fn_set_success_mg()
 
     # Backend Buttons
     def fn_set_success_mg(self):
@@ -116,6 +118,7 @@ class calculationLog(QDialog):
     # Buttons
     def fn_show_log(self):
         if self.lb_mesage.text() == "Calculation Log has been opened!":
+            modules.open_file("log/calculation_log.csv")
             self.fn_fade(0)
         else:
             if not os.path.isfile("log/calculation_log.csv"):
@@ -129,7 +132,8 @@ class calculationLog(QDialog):
             self.fn_fade(1)
         else:
             if os.path.isfile("log/calculation_log.csv"):
-                os.remove("log/calculation_log.csv")
+                shutil.rmtree("log")
+                #os.remove("log/calculation_log.csv")
                 self.fn_set_delete_mg()
             elif not os.path.isfile("log/calculation_log.csv"):
                 self.fn_fade(2)
@@ -159,6 +163,7 @@ class calculationLog(QDialog):
 
     def closeEvent(self, event):
         self.lb_mesage.setText("")
+        modules.check_csv()
 
 
 class mainScreen(QDialog):

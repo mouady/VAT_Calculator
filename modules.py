@@ -19,6 +19,7 @@ elif os.name == "ce" or os.name == "nt" or os.name == "dos":
 
 
 def create_csv():
+    os.mkdir('log')
     with open('log/calculation_log.csv', 'a', newline='') as file_csv:
         data_row1 = (['Name Calculation', 'Coin', 'Gross price', '% VAT', 'Net price'])
         _file = open('log/calculation_log.csv', 'a', )
