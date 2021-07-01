@@ -4,9 +4,9 @@ __pycache__/
 .vscode
 .idea
 # Generated data
-old_calculations.csv
+log
 
-settings.ini
+confg/settings.ini
 
 #File of tests
 .py
